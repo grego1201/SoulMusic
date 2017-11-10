@@ -136,7 +136,7 @@ public class CrearUsuario extends javax.swing.JFrame {
     private void btnRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarteActionPerformed
         // TODO add your handling code here:
         u = new Usuario(txtUsuario.getText(), txtContraseña.getText(), txtCorreo.getText());
-        Conexion_BBDD c= new Conexion_BBDD();
+        c= new Conexion_BBDD();
         String [] insertar={u.getUsuario(), u.getContraseña(), u.getCorreo(),"0"};
         String [] campos={"Nombre_user","Contrasenia","Correo","saldo"};
         try {
@@ -202,6 +202,6 @@ public class CrearUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-
+    private Conexion_BBDD c;
     private Usuario u;
 }
