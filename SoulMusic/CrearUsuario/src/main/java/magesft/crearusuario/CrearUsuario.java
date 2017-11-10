@@ -5,6 +5,12 @@
  */
 package magesft.crearusuario;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import magesft.conexion.Conexion_BBDD;
+
+
 /**
  *
  * @author 9alej
@@ -17,7 +23,6 @@ public class CrearUsuario extends javax.swing.JFrame {
     public CrearUsuario() {
         initComponents();
         lblError.setText("");
-        c = new Conexion();
     }
 
     /**
@@ -131,13 +136,15 @@ public class CrearUsuario extends javax.swing.JFrame {
     private void btnRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarteActionPerformed
         // TODO add your handling code here:
         u = new Usuario(txtUsuario.getText(), txtContraseña.getText(), txtCorreo.getText());
-        if(c.ComprobarUsuario(txtUsuario.getText())){
-            c.CrearUsuario(u);
-            Inicio i = new Inicio();
-            i.setVisible(true);
-            this.setVisible(false);
-        }else{
-            lblError.setText("El usuario " + txtUsuario.getText() + " ya existe, por favor, introduzca uno distinto");
+        Conexion_BBDD c= new Conexion_BBDD();
+        String [] insertar={u.getUsuario(), u.getContraseña(), u.getCorreo(),"0"};
+        String [] campos={"Nombre_user","Contrasenia","Correo","saldo"};
+        try {
+            c.insertar("usuarios",campos,insertar);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnRegistrarteActionPerformed
 
@@ -195,6 +202,6 @@ public class CrearUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-    private Conexion c;
+
     private Usuario u;
 }
