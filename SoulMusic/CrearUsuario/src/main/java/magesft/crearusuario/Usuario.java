@@ -11,12 +11,12 @@ package magesft.crearusuario;
  */
 public class Usuario {
     
-    private String usuario, contraseña, correo;
+    private String usuario, contrasenia, correo;
     private float saldo;
     
-    public Usuario(String usuario, String contraseña, String correo) {
+    public Usuario(String usuario, String contrasenia, String correo) {
         this.usuario = usuario;
-        this.contraseña = contraseña;
+        this.contrasenia = contrasenia;
         this.correo = correo;
         this.saldo = 0;
     }
@@ -29,12 +29,12 @@ public class Usuario {
         this.usuario = usuario;
     }
 
-    public String getContraseña() {
-        return contraseña;
+    public String getContrasenia() {
+        return contrasenia;
     }
 
-    public void setContraseña(String contraseña) {
-        this.contraseña = contraseña;
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 
     public String getCorreo() {

@@ -5,11 +5,13 @@
  */
 package magesft.crearusuario;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import magesft.conexion.Conexion_BBDD;
-
 
 /**
  *
@@ -134,23 +136,38 @@ public class CrearUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarteActionPerformed
-        try {                                               
-            // TODO add your handling code here:
-            u = new Usuario(txtUsuario.getText(), txtContraseña.getText(), txtCorreo.getText());
-            c= new Conexion_BBDD();
-            String [] insertar={u.getUsuario(), u.getContraseña(), u.getCorreo(),"0"};
-            String [] campos={"Nombre_user","Contrasenia","Correo","saldo"};
-            try {
-                c.insertar("usuarios",campos,insertar);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        // TODO add your handling code here:
+        u = new Usuario(txtUsuario.getText(), txtContraseña.getText(), txtCorreo.getText());
+        
+        Socket s=null;
+        ObjectInputStream in=null;
+        ObjectOutputStream out=null;
+        String[] campos = {"Nombre_user", "Contrasenia", "Correo", "saldo"};
+        try {
+            String serverAddress = "localhost";
+            s = new Socket(serverAddress, 4445);
+            in = new ObjectInputStream(s.getInputStream());
+            String recibido=(String)in.readObject();
+            System.out.println(recibido);
+            out = new ObjectOutputStream(s.getOutputStream());
+            out.writeObject(0);//opcion insertar
+            out.writeObject("usuarios"); //tabla
+            out.writeObject(campos);// campos sobre los que insertar
+            String[] v_insertar = {u.getUsuario(), u.getContrasenia(), u.getCorreo(), String.valueOf(u.getSaldo())};//valores a insertar
+            out.writeObject(v_insertar);
+        } catch (IOException ex) {
+            Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                out.flush();
+                out.close();
+                in.close();
+                s.close();
+            } catch (IOException ex) {
+                Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_btnRegistrarteActionPerformed
 
@@ -208,6 +225,6 @@ public class CrearUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-    private Conexion_BBDD c;
+    
     private Usuario u;
 }
