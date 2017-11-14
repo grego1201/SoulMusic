@@ -7,7 +7,7 @@ package magesft.crearusuario;
 
 /**
  *
- * @author 9alej
+ * @author 9alej COMENTARIO DE PRUEBA PARA USAR GITCRACKER
  */
 public class Inicio extends javax.swing.JFrame {
 
