@@ -134,13 +134,19 @@ public class CrearUsuario extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarteActionPerformed
-        // TODO add your handling code here:
-        u = new Usuario(txtUsuario.getText(), txtContraseña.getText(), txtCorreo.getText());
-        c= new Conexion_BBDD();
-        String [] insertar={u.getUsuario(), u.getContraseña(), u.getCorreo(),"0"};
-        String [] campos={"Nombre_user","Contrasenia","Correo","saldo"};
-        try {
-            c.insertar("usuarios",campos,insertar);
+        try {                                               
+            // TODO add your handling code here:
+            u = new Usuario(txtUsuario.getText(), txtContraseña.getText(), txtCorreo.getText());
+            c= new Conexion_BBDD();
+            String [] insertar={u.getUsuario(), u.getContraseña(), u.getCorreo(),"0"};
+            String [] campos={"Nombre_user","Contrasenia","Correo","saldo"};
+            try {
+                c.insertar("usuarios",campos,insertar);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

@@ -23,7 +23,8 @@ import java.util.ArrayList;
 public class Conexion_BBDD {
     private static Connection con;
     
-    public void conexion() throws ClassNotFoundException, SQLException{
+    
+    public Conexion_BBDD() throws ClassNotFoundException, SQLException{
         String myDriver = "org.gjt.mm.mysql.Driver";
         Class.forName(myDriver);
         con = DriverManager.getConnection("jdbc:mysql://localhost:4444/musica","root","");
@@ -31,7 +32,7 @@ public class Conexion_BBDD {
     }
     
     public ArrayList<String[]> consulta(String tabla, String [] valores, String condicion) throws ClassNotFoundException, SQLException{
-        conexion();
+    
         ArrayList<String[]> arr=new ArrayList<>();
         Statement s = con.createStatement(); 
         String v="";
@@ -61,7 +62,7 @@ public class Conexion_BBDD {
     }
     
     public void insertar(String tabla, String [] valores, String [] v_insertar) throws ClassNotFoundException, SQLException{
-        conexion();
+   
         String v="";
         String m="";
         
@@ -87,7 +88,7 @@ public class Conexion_BBDD {
     }
     
     public ArrayList<String[]> update(String tabla, String [] valores,String [] v_insertar, String condicion) throws ClassNotFoundException, SQLException{
-        conexion();
+
         ArrayList<String[]> arr=new ArrayList<>();
         Statement s = con.createStatement(); 
         String v="";
@@ -108,7 +109,7 @@ public class Conexion_BBDD {
     }
     
     public ArrayList<String[]> delete(String tabla, String condicion) throws ClassNotFoundException, SQLException{
-        conexion();
+     
         ArrayList<String[]> arr=new ArrayList<>();
         Statement s = con.createStatement(); 
         
